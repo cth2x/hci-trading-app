@@ -91,7 +91,14 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
 
   const drawer = (
     <>
-      <Toolbar sx={{ display: 'flex', justifyContent: 'center', py: 1 }}>
+      <Toolbar
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          py: 1.5,
+          background: 'linear-gradient(45deg, #1565c0 30%, #42a5f5 90%)',
+          color: 'white',
+        }}>
         <Typography
           variant="h6"
           noWrap
@@ -101,18 +108,23 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         </Typography>
       </Toolbar>
       <Divider />
-      <List>
+      <List sx={{ px: 1, py: 1 }}>
         {navItems.map((item) => (
-          <ListItem key={item.text} disablePadding>
+          <ListItem key={item.text} disablePadding sx={{ mb: 0.5 }}>
             <ListItemButton
               selected={location.pathname === item.path}
-              onClick={() => handleNavigation(item.path)}>
+              onClick={() => handleNavigation(item.path)}
+              sx={{
+                borderRadius: '8px',
+                transition: 'all 0.2s',
+              }}>
               <ListItemIcon
                 sx={{
                   color:
                     location.pathname === item.path
                       ? 'primary.main'
-                      : 'inherit',
+                      : 'text.secondary',
+                  minWidth: '40px',
                 }}>
                 {item.icon}
               </ListItemIcon>
@@ -120,7 +132,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                 primary={item.text}
                 primaryTypographyProps={{
                   fontWeight:
-                    location.pathname === item.path ? 'bold' : 'normal',
+                    location.pathname === item.path ? 'bold' : 'medium',
                 }}
               />
             </ListItemButton>
@@ -128,10 +140,15 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         ))}
       </List>
       <Divider />
-      <List>
-        <ListItem disablePadding>
-          <ListItemButton onClick={() => handleNavigation('/help')}>
-            <ListItemIcon>
+      <List sx={{ px: 1, py: 1 }}>
+        <ListItem disablePadding sx={{ mb: 0.5 }}>
+          <ListItemButton
+            onClick={() => handleNavigation('/help')}
+            sx={{
+              borderRadius: '8px',
+              transition: 'all 0.2s',
+            }}>
+            <ListItemIcon sx={{ minWidth: '40px', color: 'text.secondary' }}>
               <HelpIcon />
             </ListItemIcon>
             <ListItemText primary="Help & Support" />
@@ -147,9 +164,11 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         position="fixed"
         sx={{
           zIndex: (theme) => theme.zIndex.drawer + 1,
-          boxShadow: 1,
+          boxShadow: '0 2px 10px rgba(0, 0, 0, 0.1)',
+          backgroundImage: 'linear-gradient(to right, #1565c0, #42a5f5)',
+          color: 'white',
         }}>
-        <Toolbar>
+        <Toolbar sx={{ minHeight: { xs: '56px', sm: '64px' } }}>
           <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -158,7 +177,14 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
             sx={{ mr: 2, display: { md: 'none' } }}>
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
+          <Typography
+            variant="h6"
+            noWrap
+            component="div"
+            sx={{
+              flexGrow: 1,
+              fontWeight: 'bold',
+            }}>
             {navItems.find((item) => item.path === location.pathname)?.text ||
               'TradeSim'}
           </Typography>
@@ -270,8 +296,24 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           width: { md: `calc(100% - ${drawerWidth}px)` },
           minHeight: '100vh',
           bgcolor: 'background.default',
+          backgroundImage: 'linear-gradient(to bottom right, #f5f7fa, #e4ecf7)',
+          backgroundAttachment: 'fixed',
+          position: 'relative',
+          '&::before': {
+            content: '""',
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundImage:
+              'radial-gradient(#1e88e5 0.5px, transparent 0.5px)',
+            backgroundSize: '15px 15px',
+            opacity: 0.05,
+            pointerEvents: 'none',
+          },
         }}>
-        <Toolbar /> {/* This is for spacing below the AppBar */}
+        <Toolbar sx={{ minHeight: { xs: '56px', sm: '64px' } }} />
         {children}
       </Box>
     </Box>

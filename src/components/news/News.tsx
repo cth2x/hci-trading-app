@@ -7,8 +7,6 @@ import {
   CardHeader,
   Avatar,
   Grid,
-  Tabs,
-  Tab,
   Divider,
   Chip,
   TextField,
@@ -26,43 +24,15 @@ import {
   Bookmark as BookmarkIcon,
   BookmarkBorder as BookmarkBorderIcon,
   Share as ShareIcon,
-  FilterList as FilterListIcon,
-  CalendarMonth as CalendarMonthIcon,
 } from '@mui/icons-material';
 import { mockNews } from '../../services/mockData';
 import { NewsArticle } from '../../types';
 
-interface TabPanelProps {
-  children?: React.ReactNode;
-  index: number;
-  value: number;
-}
-
-const TabPanel = (props: TabPanelProps) => {
-  const { children, value, index, ...other } = props;
-
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`news-tabpanel-${index}`}
-      aria-labelledby={`news-tab-${index}`}
-      {...other}>
-      {value === index && <Box sx={{ pt: 3 }}>{children}</Box>}
-    </div>
-  );
-};
-
 const News: React.FC = () => {
   const theme = useTheme();
 
-  const [tabValue, setTabValue] = useState(0);
   const [searchQuery, setSearchQuery] = useState('');
   const [savedArticles, setSavedArticles] = useState<string[]>([]);
-
-  const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
-    setTabValue(newValue);
-  };
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(event.target.value);
@@ -76,46 +46,37 @@ const News: React.FC = () => {
     }
   };
 
-  // Filter news by category and search query
-  const filteredNews = mockNews
-    .filter((article) => {
-      // Filter by category
-      if (tabValue === 0) return true; // All news
-      if (tabValue === 1) return article.category === 'company';
-      if (tabValue === 2) return article.category === 'market';
-      if (tabValue === 3) return article.category === 'economic';
-      if (tabValue === 4) return article.category === 'global';
-      if (tabValue === 5) return article.category === 'industry';
-      return false;
-    })
-    .filter((article) => {
-      // Filter by search query
-      if (!searchQuery) return true;
-      const query = searchQuery.toLowerCase();
-      return (
-        article.title.toLowerCase().includes(query) ||
-        article.summary.toLowerCase().includes(query) ||
-        article.content.toLowerCase().includes(query) ||
-        (article.relatedSymbols &&
-          article.relatedSymbols.some((symbol) =>
-            symbol.toLowerCase().includes(query)
-          ))
-      );
-    });
+  // Filter news by search query only
+  const filteredNews = mockNews.filter((article) => {
+    // Filter by search query
+    if (!searchQuery) return true;
+    const query = searchQuery.toLowerCase();
+    return (
+      article.title.toLowerCase().includes(query) ||
+      article.summary.toLowerCase().includes(query) ||
+      article.content.toLowerCase().includes(query) ||
+      (article.relatedSymbols &&
+        article.relatedSymbols.some((symbol) =>
+          symbol.toLowerCase().includes(query)
+        ))
+    );
+  });
 
   return (
-    <Box>
-      <Typography variant="h4" sx={{ mb: 4 }}>
+    <Box sx={{ px: 2 }}>
+      <Typography
+        variant="h4"
+        sx={{ mb: 4, mt: 2, textAlign: 'center', fontWeight: 'medium' }}>
         Market News
       </Typography>
 
       <Grid container spacing={3}>
-        {/* News Filters */}
+        {/* Search Bar */}
         <Grid item xs={12}>
           <Card elevation={2}>
             <CardContent>
               <Grid container spacing={2} alignItems="center">
-                <Grid item xs={12} md={6}>
+                <Grid item xs={12}>
                   <TextField
                     fullWidth
                     placeholder="Search news..."
@@ -130,89 +91,18 @@ const News: React.FC = () => {
                     }}
                   />
                 </Grid>
-                <Grid
-                  item
-                  xs={12}
-                  md={6}
-                  sx={{
-                    display: 'flex',
-                    justifyContent: { xs: 'flex-start', md: 'flex-end' },
-                  }}>
-                  <Button
-                    variant="outlined"
-                    startIcon={<FilterListIcon />}
-                    sx={{ mr: 1 }}>
-                    Filters
-                  </Button>
-                  <Button variant="outlined" startIcon={<CalendarMonthIcon />}>
-                    Date Range
-                  </Button>
-                </Grid>
               </Grid>
             </CardContent>
-            <Divider />
-            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-              <Tabs
-                value={tabValue}
-                onChange={handleTabChange}
-                aria-label="news categories"
-                variant="scrollable"
-                scrollButtons="auto">
-                <Tab label="All News" />
-                <Tab label="Company Updates" />
-                <Tab label="Market Analysis" />
-                <Tab label="Economic Indicators" />
-                <Tab label="Global News" />
-                <Tab label="Industry News" />
-              </Tabs>
-            </Box>
           </Card>
         </Grid>
 
         {/* News Articles */}
         <Grid item xs={12}>
-          <TabPanel value={tabValue} index={0}>
-            <NewsGrid
-              news={filteredNews}
-              savedArticles={savedArticles}
-              onSaveArticle={handleSaveArticle}
-            />
-          </TabPanel>
-          <TabPanel value={tabValue} index={1}>
-            <NewsGrid
-              news={filteredNews}
-              savedArticles={savedArticles}
-              onSaveArticle={handleSaveArticle}
-            />
-          </TabPanel>
-          <TabPanel value={tabValue} index={2}>
-            <NewsGrid
-              news={filteredNews}
-              savedArticles={savedArticles}
-              onSaveArticle={handleSaveArticle}
-            />
-          </TabPanel>
-          <TabPanel value={tabValue} index={3}>
-            <NewsGrid
-              news={filteredNews}
-              savedArticles={savedArticles}
-              onSaveArticle={handleSaveArticle}
-            />
-          </TabPanel>
-          <TabPanel value={tabValue} index={4}>
-            <NewsGrid
-              news={filteredNews}
-              savedArticles={savedArticles}
-              onSaveArticle={handleSaveArticle}
-            />
-          </TabPanel>
-          <TabPanel value={tabValue} index={5}>
-            <NewsGrid
-              news={filteredNews}
-              savedArticles={savedArticles}
-              onSaveArticle={handleSaveArticle}
-            />
-          </TabPanel>
+          <NewsGrid
+            news={filteredNews}
+            savedArticles={savedArticles}
+            onSaveArticle={handleSaveArticle}
+          />
         </Grid>
       </Grid>
     </Box>
@@ -239,41 +129,114 @@ const NewsGrid: React.FC<NewsGridProps> = ({
           No news articles found
         </Typography>
         <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
-          Try adjusting your search or filters to find more articles.
+          Try adjusting your search to find more articles.
         </Typography>
       </Paper>
     );
   }
 
   return (
-    <Grid container spacing={3}>
+    <Grid container spacing={2}>
       {news.map((article) => (
         <Grid item xs={12} md={6} lg={4} key={article.id}>
-          <Card elevation={2}>
+          <Card
+            elevation={2}
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              height: 260,
+              position: 'relative',
+              overflow: 'hidden',
+              pt: 1,
+            }}>
+            <Typography
+              variant="subtitle1"
+              sx={{
+                lineHeight: 1.2,
+                fontSize: '0.85rem',
+                fontWeight: 'medium',
+                px: 2.5,
+                mb: 1,
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                display: '-webkit-box',
+                WebkitLineClamp: 2,
+                WebkitBoxOrient: 'vertical',
+              }}>
+              {article.title}
+            </Typography>
+
             <CardMedia
               component="img"
-              height="140"
-              image={article.imageUrl || 'https://via.placeholder.com/300x140'}
+              height="70"
+              image={article.imageUrl || 'https://via.placeholder.com/300x70'}
               alt={article.title}
+              sx={{
+                borderBottom: '1px solid rgba(0, 0, 0, 0.05)',
+                borderTop: '1px solid rgba(0, 0, 0, 0.05)',
+              }}
             />
-            <CardHeader
-              title={article.title}
-              subheader={`${article.source} • ${new Date(
-                article.publishedAt
-              ).toLocaleDateString()}`}
-            />
-            <CardContent>
-              <Typography variant="body2" color="text.secondary">
+
+            {/* Source and Date */}
+            <Box sx={{ px: 2.5, pb: 0.5, pt: 0.5 }}>
+              <Typography
+                variant="caption"
+                sx={{
+                  fontSize: '0.65rem',
+                  color: 'text.secondary',
+                  display: 'block',
+                }}>
+                {`${article.source} • ${new Date(
+                  article.publishedAt
+                ).toLocaleDateString()}`}
+              </Typography>
+            </Box>
+
+            <CardContent
+              sx={{
+                py: 0.5,
+                px: 2.5,
+                flexGrow: 1,
+                display: 'flex',
+                flexDirection: 'column',
+              }}>
+              <Typography
+                variant="body2"
+                color="text.secondary"
+                sx={{
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                  display: '-webkit-box',
+                  WebkitLineClamp: 2,
+                  WebkitBoxOrient: 'vertical',
+                  fontSize: '0.7rem',
+                  lineHeight: 1.2,
+                  mb: 'auto',
+                  height: 32,
+                }}>
                 {article.summary}
               </Typography>
 
-              <Box sx={{ mt: 2, display: 'flex', flexWrap: 'wrap', gap: 1 }}>
+              <Box
+                sx={{
+                  mt: 'auto',
+                  pt: 0.5,
+                  display: 'flex',
+                  flexWrap: 'wrap',
+                  gap: 0.4,
+                  minHeight: 18,
+                  justifyContent: 'flex-start',
+                }}>
                 <Chip
                   label={
                     article.category.charAt(0).toUpperCase() +
                     article.category.slice(1)
                   }
                   size="small"
+                  sx={{
+                    height: 16,
+                    '& .MuiChip-label': { px: 0.6, fontSize: '0.6rem' },
+                  }}
                   color={
                     article.category === 'company'
                       ? 'primary'
@@ -293,48 +256,72 @@ const NewsGrid: React.FC<NewsGridProps> = ({
                       label={symbol}
                       size="small"
                       variant="outlined"
+                      sx={{
+                        height: 16,
+                        '& .MuiChip-label': { px: 0.6, fontSize: '0.6rem' },
+                      }}
                     />
                   ))}
               </Box>
             </CardContent>
-            <CardActions disableSpacing>
+            <CardActions
+              disableSpacing
+              sx={{
+                pt: 0,
+                pb: 0.5,
+                px: 2.5,
+                mt: 'auto',
+                display: 'flex',
+                justifyContent: 'space-between',
+              }}>
               <Button
                 size="small"
                 color="primary"
                 href={article.url}
-                target="_blank">
+                target="_blank"
+                sx={{
+                  fontSize: '0.65rem',
+                  py: 0.1,
+                  minWidth: '60px',
+                  mx: 'auto',
+                }}>
                 Read More
               </Button>
-              <Box sx={{ flexGrow: 1 }} />
-              <IconButton
-                aria-label="share article"
-                onClick={() => {
-                  if (navigator.share) {
-                    navigator.share({
-                      title: article.title,
-                      text: article.summary,
-                      url: article.url,
-                    });
+              <Box sx={{ display: 'flex' }}>
+                <IconButton
+                  aria-label="share article"
+                  onClick={() => {
+                    if (navigator.share) {
+                      navigator.share({
+                        title: article.title,
+                        text: article.summary,
+                        url: article.url,
+                      });
+                    }
+                  }}
+                  size="small"
+                  sx={{ p: 0.3 }}>
+                  <ShareIcon fontSize="small" />
+                </IconButton>
+                <IconButton
+                  aria-label={
+                    savedArticles.includes(article.id)
+                      ? 'unsave article'
+                      : 'save article'
                   }
-                }}>
-                <ShareIcon />
-              </IconButton>
-              <IconButton
-                aria-label={
-                  savedArticles.includes(article.id)
-                    ? 'unsave article'
-                    : 'save article'
-                }
-                onClick={() => onSaveArticle(article.id)}
-                color={
-                  savedArticles.includes(article.id) ? 'primary' : 'default'
-                }>
-                {savedArticles.includes(article.id) ? (
-                  <BookmarkIcon />
-                ) : (
-                  <BookmarkBorderIcon />
-                )}
-              </IconButton>
+                  onClick={() => onSaveArticle(article.id)}
+                  color={
+                    savedArticles.includes(article.id) ? 'primary' : 'default'
+                  }
+                  size="small"
+                  sx={{ p: 0.3 }}>
+                  {savedArticles.includes(article.id) ? (
+                    <BookmarkIcon fontSize="small" />
+                  ) : (
+                    <BookmarkBorderIcon fontSize="small" />
+                  )}
+                </IconButton>
+              </Box>
             </CardActions>
           </Card>
         </Grid>

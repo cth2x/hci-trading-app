@@ -197,70 +197,86 @@ export const mockTransactions: Transaction[] = [
 export const mockNews: NewsArticle[] = [
   {
     id: '1',
-    title: 'Apple Announces New iPhone Model',
+    title: 'Apple Unveils AI-Powered iPhone 17 Pro',
     summary:
-      'Apple Inc. has unveiled its latest iPhone model with revolutionary features.',
+      'Apple Inc. has revealed its latest iPhone with advanced AI capabilities and quantum computing features.',
     content:
-      'Apple Inc. has unveiled its latest iPhone model with revolutionary features including enhanced AI capabilities, improved camera system, and longer battery life. The new model is expected to hit the market next month.',
-    source: 'Tech News',
+      'Apple Inc. has unveiled its latest iPhone 17 Pro with revolutionary features including advanced on-device AI capabilities, quantum computing elements, and an unprecedented 7-day battery life. The new model is expected to hit the market next month with a starting price of $1,299.',
+    source: 'Tech Insider',
     imageUrl: 'https://via.placeholder.com/300x200',
     url: 'https://example.com/news/1',
-    publishedAt: new Date('2023-03-25T08:00:00'),
+    publishedAt: new Date('2025-03-15T08:00:00'),
     category: 'company',
     relatedSymbols: ['AAPL'],
   },
   {
     id: '2',
-    title: 'Bitcoin Surges Past $45,000',
+    title: 'Bitcoin Reaches $120,000 Milestone',
     summary:
-      'Bitcoin has surged past $45,000 amid growing institutional adoption.',
+      'Bitcoin has surpassed $120,000 as institutional adoption continues to grow worldwide.',
     content:
-      'Bitcoin has surged past $45,000 amid growing institutional adoption and increasing interest from major financial institutions. Analysts predict further growth in the coming months as more companies add Bitcoin to their balance sheets.',
+      'Bitcoin has surged past $120,000 amid widespread institutional adoption and increasing integration with traditional financial systems. Central banks worldwide are now holding Bitcoin as a reserve asset, with analysts predicting further growth as digital currencies become mainstream payment methods.',
     source: 'Crypto Daily',
     imageUrl: 'https://via.placeholder.com/300x200',
     url: 'https://example.com/news/2',
-    publishedAt: new Date('2023-03-24T14:30:00'),
+    publishedAt: new Date('2025-03-14T14:30:00'),
     category: 'market',
     relatedSymbols: ['BTC'],
   },
   {
     id: '3',
-    title: 'Federal Reserve Announces Interest Rate Decision',
+    title: 'Federal Reserve Implements Digital Dollar',
     summary:
-      'The Federal Reserve has announced its latest interest rate decision.',
+      'The Federal Reserve has officially launched the digital dollar after three years of development.',
     content:
-      'The Federal Reserve has announced its latest interest rate decision, keeping rates unchanged but signaling potential increases later this year. The decision comes amid concerns about inflation and economic recovery.',
+      "The Federal Reserve has officially launched the digital dollar after three years of development and testing. This central bank digital currency (CBDC) will coexist with traditional currency and is designed to enhance payment efficiency while maintaining monetary policy control. The move comes as China's digital yuan gains global traction.",
     source: 'Financial Times',
     imageUrl: 'https://via.placeholder.com/300x200',
     url: 'https://example.com/news/3',
-    publishedAt: new Date('2023-03-23T16:45:00'),
+    publishedAt: new Date('2025-03-13T16:45:00'),
     category: 'economic',
   },
   {
     id: '4',
-    title: 'Gold Prices Stabilize Amid Market Uncertainty',
-    summary: 'Gold prices have stabilized amid ongoing market uncertainty.',
+    title: 'Gold Surges as Geopolitical Tensions Rise',
+    summary:
+      'Gold prices have reached record highs amid increasing global uncertainty.',
     content:
-      'Gold prices have stabilized amid ongoing market uncertainty and geopolitical tensions. The precious metal continues to be a safe haven for investors looking to hedge against inflation and market volatility.',
+      'Gold prices have reached record highs of $3,200 per ounce amid increasing geopolitical tensions and economic uncertainty. The precious metal continues to be a safe haven for investors looking to hedge against inflation and market volatility, with central banks increasing their reserves.',
     source: 'Commodity Insights',
     imageUrl: 'https://via.placeholder.com/300x200',
     url: 'https://example.com/news/4',
-    publishedAt: new Date('2023-03-22T10:15:00'),
+    publishedAt: new Date('2025-03-12T10:15:00'),
     category: 'market',
     relatedSymbols: ['GOLD'],
   },
   {
     id: '5',
-    title: 'Tech Sector Leads Market Rally',
-    summary: 'The technology sector is leading a broad market rally.',
+    title: 'AI Sector Drives Historic Market Gains',
+    summary:
+      'Artificial intelligence companies lead unprecedented market growth.',
     content:
-      'The technology sector is leading a broad market rally as investors bet on continued growth in digital services and products. Major tech companies have reported strong earnings, boosting investor confidence.',
+      'Artificial intelligence companies are driving historic market gains as the technology becomes embedded in virtually every industry. Major tech companies have reported record earnings from their AI divisions, with specialized AI firms seeing valuations multiply as adoption accelerates across healthcare, finance, and manufacturing.',
     source: 'Market Watch',
     imageUrl: 'https://via.placeholder.com/300x200',
     url: 'https://example.com/news/5',
-    publishedAt: new Date('2023-03-21T09:30:00'),
+    publishedAt: new Date('2025-03-11T09:30:00'),
     category: 'industry',
-    relatedSymbols: ['AAPL', 'MSFT', 'GOOGL', 'AMZN'],
+    relatedSymbols: ['NVDA', 'MSFT', 'GOOGL', 'AMZN'],
+  },
+  {
+    id: '6',
+    title: 'Quantum Computing Breakthrough Transforms Cybersecurity',
+    summary:
+      'A major quantum computing breakthrough has significant implications for global cybersecurity standards.',
+    content:
+      'A major quantum computing breakthrough has significant implications for global cybersecurity standards, as researchers have demonstrated the first practical quantum-resistant encryption system. Tech companies are racing to implement new security protocols as quantum computers begin to solve problems previously thought impossible, threatening existing encryption methods.',
+    source: 'Tech Review',
+    imageUrl: 'https://via.placeholder.com/300x200',
+    url: 'https://example.com/news/6',
+    publishedAt: new Date('2025-03-10T11:45:00'),
+    category: 'global',
+    relatedSymbols: ['IBM', 'MSFT', 'GOOGL', 'ORCL'],
   },
 ];
 

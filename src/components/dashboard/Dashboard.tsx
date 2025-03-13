@@ -109,37 +109,38 @@ const Dashboard: React.FC = () => {
 
   return (
     <Box>
-      <Typography variant="h4" sx={{ mb: 4 }}>
+      <Typography variant="h5" sx={{ mb: 2 }}>
         Welcome back, {user?.name || 'User'}
       </Typography>
 
-      <Grid container spacing={3}>
+      <Grid container spacing={2}>
         {/* Account Summary */}
         <Grid item xs={12} md={4}>
           <Card elevation={2}>
             <CardHeader
               title="Account Summary"
               avatar={
-                <Avatar sx={{ bgcolor: theme.palette.primary.main }}>
-                  <AccountBalanceIcon />
+                <Avatar sx={{ bgcolor: 'rgba(100, 181, 246, 0.2)' }}>
+                  <AccountBalanceIcon sx={{ color: '#90caf9' }} />
                 </Avatar>
               }
+              sx={{ py: 1 }}
             />
-            <CardContent>
-              <Box sx={{ mb: 2 }}>
+            <CardContent sx={{ py: 1 }}>
+              <Box sx={{ mb: 1 }}>
                 <Typography variant="subtitle2" color="text.secondary">
                   Available Balance
                 </Typography>
-                <Typography variant="h4">
+                <Typography variant="h5">
                   ${userBalance.toLocaleString()}
                 </Typography>
               </Box>
 
-              <Box sx={{ mb: 2 }}>
+              <Box sx={{ mb: 1 }}>
                 <Typography variant="subtitle2" color="text.secondary">
                   Portfolio Value
                 </Typography>
-                <Typography variant="h4">
+                <Typography variant="h5">
                   ${portfolioValue.toLocaleString()}
                 </Typography>
               </Box>
@@ -148,7 +149,7 @@ const Dashboard: React.FC = () => {
                 <Typography variant="subtitle2" color="text.secondary">
                   Total Assets
                 </Typography>
-                <Typography variant="h4">
+                <Typography variant="h5">
                   ${(userBalance + portfolioValue).toLocaleString()}
                 </Typography>
               </Box>
@@ -162,31 +163,54 @@ const Dashboard: React.FC = () => {
             <CardHeader
               title="Portfolio Performance"
               avatar={
-                <Avatar sx={{ bgcolor: theme.palette.primary.main }}>
-                  <ShowChartIcon />
+                <Avatar sx={{ bgcolor: 'rgba(100, 181, 246, 0.2)' }}>
+                  <ShowChartIcon sx={{ color: '#90caf9' }} />
                 </Avatar>
               }
+              sx={{ py: 1 }}
             />
-            <CardContent>
-              <Box sx={{ height: 250 }}>
+            <CardContent sx={{ py: 1 }}>
+              <Box sx={{ height: 180 }}>
                 <ResponsiveContainer width="100%" height="100%">
                   <LineChart
                     data={chartData}
                     margin={{
                       top: 5,
-                      right: 30,
-                      left: 20,
+                      right: 20,
+                      left: 10,
                       bottom: 5,
                     }}>
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="name" />
-                    <YAxis />
-                    <Tooltip formatter={(value) => [`$${value}`, 'Value']} />
+                    <CartesianGrid
+                      strokeDasharray="3 3"
+                      stroke="rgba(255, 255, 255, 0.1)"
+                    />
+                    <XAxis dataKey="name" stroke="rgba(255, 255, 255, 0.7)" />
+                    <YAxis stroke="rgba(255, 255, 255, 0.7)" />
+                    <Tooltip
+                      formatter={(value) => [`$${value}`, 'Value']}
+                      contentStyle={{
+                        backgroundColor: '#2c2c2c',
+                        border: 'none',
+                      }}
+                      labelStyle={{ color: 'rgba(255, 255, 255, 0.7)' }}
+                    />
                     <Line
                       type="monotone"
                       dataKey="value"
-                      stroke={theme.palette.primary.main}
-                      activeDot={{ r: 8 }}
+                      stroke="#90caf9"
+                      strokeWidth={2}
+                      dot={{
+                        stroke: '#90caf9',
+                        strokeWidth: 2,
+                        r: 4,
+                        fill: '#1e1e1e',
+                      }}
+                      activeDot={{
+                        r: 6,
+                        stroke: '#90caf9',
+                        strokeWidth: 2,
+                        fill: '#90caf9',
+                      }}
                     />
                   </LineChart>
                 </ResponsiveContainer>
@@ -201,28 +225,29 @@ const Dashboard: React.FC = () => {
             <CardHeader
               title="Market Overview"
               avatar={
-                <Avatar sx={{ bgcolor: theme.palette.primary.main }}>
-                  <TrendingUpIcon />
+                <Avatar sx={{ bgcolor: 'rgba(100, 181, 246, 0.2)' }}>
+                  <TrendingUpIcon sx={{ color: '#90caf9' }} />
                 </Avatar>
               }
               action={
-                <IconButton aria-label="settings">
+                <IconButton aria-label="settings" size="small">
                   <MoreVertIcon />
                 </IconButton>
               }
+              sx={{ py: 1 }}
             />
-            <CardContent sx={{ maxHeight: 300, overflow: 'auto' }}>
-              <List disablePadding>
-                {assets.slice(0, 5).map((asset) => (
+            <CardContent sx={{ maxHeight: 300, overflow: 'auto', py: 0 }}>
+              <List disablePadding dense>
+                {assets.slice(0, 7).map((asset) => (
                   <React.Fragment key={asset.id}>
                     <ListItem
                       secondaryAction={
                         <Chip
                           icon={
                             asset.priceChange >= 0 ? (
-                              <TrendingUpIcon />
+                              <TrendingUpIcon fontSize="small" />
                             ) : (
-                              <TrendingDownIcon />
+                              <TrendingDownIcon fontSize="small" />
                             )
                           }
                           label={`${
@@ -268,19 +293,20 @@ const Dashboard: React.FC = () => {
             <CardHeader
               title="Recent Transactions"
               avatar={
-                <Avatar sx={{ bgcolor: theme.palette.primary.main }}>
-                  <PaidIcon />
+                <Avatar sx={{ bgcolor: 'rgba(100, 181, 246, 0.2)' }}>
+                  <PaidIcon sx={{ color: '#90caf9' }} />
                 </Avatar>
               }
               action={
-                <IconButton aria-label="settings">
+                <IconButton aria-label="settings" size="small">
                   <MoreVertIcon />
                 </IconButton>
               }
+              sx={{ py: 1 }}
             />
-            <CardContent sx={{ maxHeight: 300, overflow: 'auto' }}>
-              <List disablePadding>
-                {transactions.slice(0, 5).map((transaction) => (
+            <CardContent sx={{ maxHeight: 300, overflow: 'auto', py: 0 }}>
+              <List disablePadding dense>
+                {transactions.slice(0, 7).map((transaction) => (
                   <React.Fragment key={transaction.id}>
                     <ListItem>
                       <ListItemText
@@ -311,7 +337,8 @@ const Dashboard: React.FC = () => {
                             </Typography>
                             <Typography
                               variant="caption"
-                              color="text.secondary">
+                              color="text.secondary"
+                              display="block">
                               {new Date(
                                 transaction.timestamp
                               ).toLocaleDateString()}{' '}
